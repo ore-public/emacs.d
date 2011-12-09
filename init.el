@@ -2,10 +2,10 @@
 (defun add-to-load-path (&rest paths)
   (let (path)
     (dolist (path paths paths)
-	  (let ((default-directory (expand-file-name (concat user-emacs-directory path))))
-	(add-to-list 'load-path default-directory)
-	(if (fboundp 'normal-top-level-add-subdirs-to-load-path)
-	    (normal-top-level-add-subdirs-to-load-path))))))
+    (let ((default-directory (expand-file-name (concat user-emacs-directory path))))
+  (add-to-list 'load-path default-directory)
+  (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
+      (normal-top-level-add-subdirs-to-load-path))))))
 
 ;; elispとconfディレクトリをサブディレクトリごとload-pathに追加
 (add-to-load-path "elisp" "conf")
@@ -52,8 +52,8 @@
   (color-theme-dark-laptop))
 
 (set-face-attribute 'default nil
-	    :family "VL ゴシック"
-	    :height 110)
+      :family "VL ゴシック"
+      :height 110)
 
 (set-fontset-font
  nil 'japanese-jisx0208
@@ -73,10 +73,10 @@
 ;;install http://sourceforge.net/projects/php-mode/
 (require 'php-mode)
 (add-hook 'php-mode-user-hook
-	  '(lambda ()
-		 (setq tab-width 4)
-		 (setq indent-tabs-mode t))
-	  )
+    '(lambda ()
+     (setq tab-width 4)
+     (setq indent-tabs-mode t))
+    )
 
 ;;(install-elisp "http://www.emacswiki.org/emacs/download/color-moccur.el")
 ;;(install-elisp "http://www.emacswiki.org/emacs/download/moccur-edit.el")
@@ -95,17 +95,17 @@
 ;;(install-elisp "http://github.com/imakado/emacs-smartchr/raw/master/smartchr.el")
 (when (require 'smartchr nil t)
   (define-key global-map
-	(kbd "=") (smartchr '("=" " = " " == " " === "))
-;;	(kbd ">") (smartchr '("\>"  " => "))
-	))
+  (kbd "=") (smartchr '("=" " = " " == " " === "))
+;;  (kbd ">") (smartchr '("\>"  " => "))
+  ))
 
 ;;ElScreen
 (when (require 'elscreen nil t)
   (if window-system
-	  (define-key elscreen-map (kbd "C-z")
-		'iconify-or-deiconify-frame)
-	(define-key elscreen-map (kbd "C-z")
-	  'suspend-emacs)))
+    (define-key elscreen-map (kbd "C-z")
+    'iconify-or-deiconify-frame)
+  (define-key elscreen-map (kbd "C-z")
+    'suspend-emacs)))
 
 ;; anything
 (when (require 'anything nil t)
@@ -117,23 +117,23 @@
    anything-enable-shortcuts 'alphabet)
 
   (when (require 'anything-config nil t)
-	(setq anything-su-or-sudo "sudo"))
+  (setq anything-su-or-sudo "sudo"))
 
   (require 'anything-match-plugin nil t)
   (and (equal current-language-environment "Japanese")
-	   (executable-find "cmigemo")
-	   (require 'anything-migemo nil t))
+     (executable-find "cmigemo")
+     (require 'anything-migemo nil t))
   (when (require 'anything-complete nil t)
-	;;M-xによる保管をAnythingで行う
-	;;(anything-read-string-mode 1)
-	(anything-lisp-complete-symbol-set-timer 150))
+  ;;M-xによる保管をAnythingで行う
+  ;;(anything-read-string-mode 1)
+  (anything-lisp-complete-symbol-set-timer 150))
   (require 'anything-show-completion nil t)
 
   (when (require 'auto-install nil t)
-	(require 'anything-auto-install nil t))
+  (require 'anything-auto-install nil t))
 
   (when (require 'descbinds-anything nil t)
-	(descbinds-anything-install))
+  (descbinds-anything-install))
   
   (require 'anything-grep nil t))
 
@@ -159,9 +159,9 @@
 (setq rsense-home (expand-file-name "~/.emacs.d/rsense"))
 (require 'rsense)
 (add-hook 'ruby-mode-hook
-		  (lambda ()
-			(add-to-list 'ac-sources 'ac-source-rsense-method)
-			(add-to-list 'ac-sources 'ac-source-rsense-constant)))
+      (lambda ()
+      (add-to-list 'ac-sources 'ac-source-rsense-method)
+      (add-to-list 'ac-sources 'ac-source-rsense-constant)))
 
 ;; Rinari
 (require 'rinari)
@@ -181,36 +181,36 @@
 ;; (require 'flymake)
 ;; (defun flymake-ruby-init ()
 ;;   (let* ((temp-file (flymake-init-create-temp-buffer-copy
-;; 					 'flymake-create-temp-inplace))
-;; 		 (local-file (file-relative-name
-;; 					  temp-file
-;; 					  (file-name-directory buffer-file-name))))
-;; 	(list "ruby" (list "-c" local-file))))
+;;           'flymake-create-temp-inplace))
+;;     (local-file (file-relative-name
+;;            temp-file
+;;            (file-name-directory buffer-file-name))))
+;;  (list "ruby" (list "-c" local-file))))
 ;; (push '(".+\\.rb$" flymake-ruby-init) flymake-allowed-file-name-masks)
 ;; (push '("Rakefile$" flymake-ruby-init) flymake-allowed-file-name-masks)
 ;; (push '("^\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3) flymake-err-line-patterns)
 ;; (add-hook
 ;;  'ruby-mode-hook
 ;;  '(lambda ()
-;; 	(if (not (null buffer-file-name)) (flymake-mode))
-;; 	(define-key ruby-mod-map "\C-cd" 'credmp/flymake-display-err-minibuf)))
+;;  (if (not (null buffer-file-name)) (flymake-mode))
+;;  (define-key ruby-mod-map "\C-cd" 'credmp/flymake-display-err-minibuf)))
 
 ;; (defun credmp/flymake-display-err-minibuf ()
 ;;   (interactive)
 ;;   (let* ((line-no (flymake-current-line-no))
-;; 		 (line-err-info-list (nth 0 (flymake-find-err-info flymake-err-into line-no)))
-;; 		 (count (length line-err-info-list))
-;; 		 )
-;; 	(while (> count 0)
-;; 	  (when line-err-info-list
-;; 		(let* ((file (flymake-ler-file (nth (1- count) line-err-info-list)))
-;; 			   (full-file (flymake-ler-full-file (nth (1- count) line-err-info-list)))
-;; 			   (text (flymake-ler-text (nth (1- count) line-err-info-list)))
-;; 			   (line (flymake-ler-line (nth (1- count) line-err-info-list))))
-;; 		  (message "[%s]%s" line text)
-;; 		  )
-;; 		)
-;; 	  (setq count (1- count)))))
+;;     (line-err-info-list (nth 0 (flymake-find-err-info flymake-err-into line-no)))
+;;     (count (length line-err-info-list))
+;;     )
+;;  (while (> count 0)
+;;    (when line-err-info-list
+;;    (let* ((file (flymake-ler-file (nth (1- count) line-err-info-list)))
+;;         (full-file (flymake-ler-full-file (nth (1- count) line-err-info-list)))
+;;         (text (flymake-ler-text (nth (1- count) line-err-info-list)))
+;;         (line (flymake-ler-line (nth (1- count) line-err-info-list))))
+;;      (message "[%s]%s" line text)
+;;      )
+;;    )
+;;    (setq count (1- count)))))
 
 
 ;;; This was installed by package-install.el.
@@ -219,8 +219,8 @@
 ;;; Move this code earlier if you want to reference
 ;;; packages in your .emacs.
 (when
-	(load
-	 (expand-file-name "~/.emacs.d/elpa/package.el"))
+  (load
+   (expand-file-name "~/.emacs.d/elpa/package.el"))
   (package-initialize))
 
 ;; Clozure CL is default Common Lisp proc
@@ -259,14 +259,14 @@
         (lambda (&rest args)
           (apply (if (memq major-mode '(emacs-lisp-mode lisp-interaction-mode))
                      'lisp-indent-function
-				   'common-lisp-indent-function)
+           'common-lisp-indent-function)
                  args))))
 
 ;; Twitter
 (require 'twittering-mode)
 (setq twittering-status-format
-	  "%C{%Y/%m/%d %H:%M:%S} %s > %T // from %f%L%r%R")
+    "%C{%Y/%m/%d %H:%M:%S} %s > %T // from %f%L%r%R")
 (setq twittering-username "ore_public")
 
 ;; emacs-w3m
-(require 'w3m-load)
+;; (require 'w3m-load)
